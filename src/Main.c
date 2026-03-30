@@ -107,10 +107,9 @@ void Update(AlxWindow* w){
 		Sprite_Free(&trans);
 	}
 
-	String str = String_Format("Info: %d -> %f, %f",Mode,Regler1,Regler2);
-	CStr_RenderSizeAlxFont(WINDOW_STD_ARGS,&window.AlxFont,str.Memory,str.size,0.0f,0.0f,RED);
-	String_Free(&str);
-
+	CStr_RenderAlxFontf(WINDOW_STD_ARGS,&window.AlxFont,0.0f,0.0f,RED,"Info: %d",Mode);
+	CStr_RenderAlxFontf(WINDOW_STD_ARGS,&window.AlxFont,0.0f,window.AlxFont.CharSizeY,RED,"%f, %f",Regler1,Regler2);
+	
 	Sprite_Free(&sp);
 	sp = now;
 }
@@ -120,7 +119,7 @@ void Delete(AlxWindow* w){
 }
 
 int main(){
-    if(Create("8Bits of Image Processing",2500,1200,1,1,Setup,Update,Delete))
+    if(Create("8Bits of Image Processing",RLCAMERA_WIDTH * 2,RLCAMERA_HEIGHT * 2,1,1,Setup,Update,Delete))
         Start();
     return 0;
 }
