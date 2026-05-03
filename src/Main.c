@@ -107,8 +107,8 @@ void Update(AlxWindow* w){
 		Sprite_Free(&trans);
 	}
 
-	CStr_RenderAlxFontf(WINDOW_STD_ARGS,&window.AlxFont,0.0f,0.0f,RED,"Info: %d",Mode);
-	CStr_RenderAlxFontf(WINDOW_STD_ARGS,&window.AlxFont,0.0f,window.AlxFont.CharSizeY,RED,"%f, %f",Regler1,Regler2);
+	CStr_RenderAlxFontf(WINDOW_STD_ARGS,&window.font,0.0f,0.0f,RED,"Info: %d",Mode);
+	CStr_RenderAlxFontf(WINDOW_STD_ARGS,&window.font,0.0f,window.font.CharSizeY,RED,"%f, %f",Regler1,Regler2);
 	
 	Sprite_Free(&sp);
 	sp = now;
