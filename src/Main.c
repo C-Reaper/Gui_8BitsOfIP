@@ -6,6 +6,7 @@ float Regler1 = 0.5f;
 float Regler2 = 0.5f;
 int Mode = 0;
 Sprite sp;
+Sprite res;
 RLCamera rlc;
 
 void Setup(AlxWindow* w){
@@ -13,6 +14,7 @@ void Setup(AlxWindow* w){
 	//sp = Sprite_Load("./data/Linux.png");
 
 	sp = Sprite_Null();
+	res = Sprite_Null();
 	rlc = RLCamera_New(RLCAMERA_DEVICE,RLCAMERA_WIDTH * 2,RLCAMERA_HEIGHT * 2);
 }
 void Update(AlxWindow* w){
@@ -31,6 +33,7 @@ void Update(AlxWindow* w){
 	if(Stroke(ALX_KEY_Z).PRESSED) Mode = 12;
 	if(Stroke(ALX_KEY_U).PRESSED) Mode = 13;
 	if(Stroke(ALX_KEY_I).PRESSED) Mode = 14;
+	if(Stroke(ALX_KEY_O).PRESSED) Mode = 15;
 
 	if(Stroke(ALX_KEY_W).DOWN) Regler1 *= 1.01;
 	if(Stroke(ALX_KEY_S).DOWN) Regler1 *= 0.99;
@@ -42,6 +45,8 @@ void Update(AlxWindow* w){
     now.img = RLCamera_Get(&rlc,&width,&height);
     now.w = width;
     now.h = height;
+
+	if(!res.img) res = Sprite_Cpy(&now);
     
     Clear(BLACK);
 
@@ -102,6 +107,11 @@ void Update(AlxWindow* w){
 		Sprite_Render(WINDOW_STD_ARGS,&trans,0.0f,0.0f);
 		Sprite_Free(&trans);
 	}else if(Mode==14){
+		Sprite trans = ImageFilter_C_Fade(&res,&now,Regler1 * w->ElapsedTime);
+		Sprite_Render(WINDOW_STD_ARGS,&trans,0.0f,0.0f);
+		Sprite_Free(&res);
+		res = trans;
+	}else if(Mode==15){
 		Sprite trans = ImageFilter_G_TemporalRC(&sp,&now,Regler1);
 		Sprite_Render(WINDOW_STD_ARGS,&trans,0.0f,0.0f);
 		Sprite_Free(&trans);
@@ -115,6 +125,7 @@ void Update(AlxWindow* w){
 }
 void Delete(AlxWindow* w){
 	Sprite_Free(&sp);
+	Sprite_Free(&res);
 	RLCamera_Free(&rlc);
 }
 
